@@ -1,12 +1,12 @@
 name: Feature Request
-description: Propose a new feature for laravel-model-hashid package
+description: Propose a new feature for laravel-presenter package
 title: "[Feature Request]: "
 labels: [feature request]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for proposing a feature for laravel-model-hashid package.
+        Thanks for proposing a feature for laravel-presenter package.
   - type: textarea
     id: feature-description
     attributes:

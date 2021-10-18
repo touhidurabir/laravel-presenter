@@ -3,7 +3,6 @@
 namespace Touhidurabir\Presenter\Tests\Traits;
 
 use Touhidurabir\Presenter\PresenterServiceProvider;
-use Touhidurabir\Presenter\PersenterServiceProvider;
 
 trait LaravelTestBootstrapping {
 

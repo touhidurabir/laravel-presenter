@@ -1,0 +1,9 @@
+<?php
+
+namespace {{classNamespace}};
+
+use Touhidurabir\Presenter\BasePresenter;
+
+class {{class}} extends BasePresenter {
+
+}

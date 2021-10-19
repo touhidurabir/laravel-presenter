@@ -1,4 +1,4 @@
-# Laravel Persenter
+# Laravel Presenter
 
 A package that helps to group methods that mostly use for the view presentation purpose.
 

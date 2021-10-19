@@ -1,6 +1,6 @@
 <?php
 
-namespace Touhidurabir\Persenter\Console\Concerns;
+namespace Touhidurabir\Presenter\Console\Concerns;
 
 use Throwable;
 

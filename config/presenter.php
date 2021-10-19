@@ -4,22 +4,25 @@ return [
 
 	/*
     |---------------------------------------------------------------------------
-    | Should the Hashing Enables
+    | The base presenter namespace
     |---------------------------------------------------------------------------
-    | The configuratin of the .env to determine should the ID Hashing enabled 
-    | or not for any model that used this package.
+    | Define the namespace of the presenter class which will be used to decide
+    | where the presenter class should be stored
     |
     */
-	'class_store_path' => env('ID_HASHING', true),
+	'presenter_namespace' => 'App\\Presenters',
 
 
     /*
     |---------------------------------------------------------------------------
-    | Unique Key used for Hashing
+    | Presenter class auto resolve based on model name
     |---------------------------------------------------------------------------
-    | The unique key to use for all ID hashing and then dehashing . It is advised
-    | to set one such.
+    | If the $presenter property not defined in the model class and if this set
+    | to true, it will try to resolve the presenter class based on model name
+    | and based on config provided presenter_namespace location.
     |
     */
-	'auto_resolving' => env('ID_HASHING_KEY', ''),
+	'auto_resolve' => true,
+
+    'class_name_prefix' => 'Presenter',
 ];

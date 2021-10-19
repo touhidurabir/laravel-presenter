@@ -30,7 +30,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Touhidurabir\\Presenter\\PersenterServiceProvider"
+                "Touhidurabir\\Presenter\\PresenterServiceProvider"
             ]
         }
     }

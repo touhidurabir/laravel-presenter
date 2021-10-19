@@ -1,11 +1,11 @@
 <?php
 
-namespace Touhidurabir\Persenter;
+namespace Touhidurabir\Presenter;
 
 use Illuminate\Support\ServiceProvider;
-use Touhidurabir\Persenter\Console\GeneratePersenter;
+use Touhidurabir\Presenter\Console\GeneratePresenter;
 
-class PersenterServiceProvider extends ServiceProvider {
+class PresenterServiceProvider extends ServiceProvider {
     
     /**
      * Bootstrap any application services.
@@ -16,12 +16,12 @@ class PersenterServiceProvider extends ServiceProvider {
 
         if ( $this->app->runningInConsole() ) {
 			$this->commands([
-				GeneratePersenter::class
+				GeneratePresenter::class
 			]);
 		}
 
         $this->publishes([
-            __DIR__.'/../config/persenter.php' => base_path('config/persenter.php'),
+            __DIR__.'/../config/presenter.php' => base_path('config/presenter.php'),
         ], 'config');
     }
     
@@ -34,7 +34,7 @@ class PersenterServiceProvider extends ServiceProvider {
     public function register() {
 
         $this->mergeConfigFrom(
-            __DIR__.'/../config/persenter.php', 'persenter'
+            __DIR__.'/../config/presenter.php', 'presenter'
         );
     }
 }

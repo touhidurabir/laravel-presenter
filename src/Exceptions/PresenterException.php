@@ -8,6 +8,12 @@ use Touhidurabir\Presenter\BasePresenter;
 
 class PresenterException extends Exception {
     
+    /**
+     * Generate exception object if presenter class not defined
+     *
+     * @param  object<\Illuminate\Database\Eloquent\Model> $model
+     * @return object<\Excaption>
+     */
     public static function presenterNotDefined(Model $model) {
         
         return new static(
@@ -15,6 +21,15 @@ class PresenterException extends Exception {
         );
     }
 
+
+    /**
+     * Generate exception object if presenter class not a valid instance of base presenter class
+     *
+     * @param  object<\Illuminate\Database\Eloquent\Model>  $model
+     * @param  string                                       $presenterClass
+     * 
+     * @return object<\Excaption>
+     */
     public static function presenterNotValidInstanceOfBase(Model $model, string $presenterClass) {
 
         return new static(
@@ -27,6 +42,15 @@ class PresenterException extends Exception {
         );
     }
 
+
+    /**
+     * Generate exception object if presenter class not a found at given path/namespace
+     *
+     * @param  object<\Illuminate\Database\Eloquent\Model>  $model
+     * @param  string                                       $presenterClass
+     * 
+     * @return object<\Excaption>
+     */
     public static function presenterClassNotFound(Model $model, string $presenterClass) {
         
         return new static(
@@ -37,4 +61,5 @@ class PresenterException extends Exception {
             )
         );
     }
+    
 }

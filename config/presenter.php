@@ -24,5 +24,14 @@ return [
     */
 	'auto_resolve' => true,
 
+
+    /*
+    |---------------------------------------------------------------------------
+    | Presenter class name prefix
+    |---------------------------------------------------------------------------
+    | The default prefix that will be attached to a presenter class name every
+    | time on generation.
+    |
+    */
     'class_name_prefix' => 'Presenter',
 ];

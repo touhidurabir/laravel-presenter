@@ -11,6 +11,14 @@ class PresenterResolver {
 
     use NamespaceResolver;
 
+    /**
+     * Resolve the model presenter class based on model
+     *
+     * @param  object<\Illuminate\Database\Eloquent\Model> $model
+     * @return object
+     * 
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterClassNotFound
+     */
     public static function resolve(Model $model) {
 
         $presenterStorePath = config('presenter.presenter_namespace');
@@ -26,4 +34,5 @@ class PresenterResolver {
 
         return $presenter;
     }
+    
 }

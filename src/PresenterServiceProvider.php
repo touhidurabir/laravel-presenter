@@ -37,4 +37,5 @@ class PresenterServiceProvider extends ServiceProvider {
             __DIR__.'/../config/presenter.php', 'presenter'
         );
     }
+    
 }

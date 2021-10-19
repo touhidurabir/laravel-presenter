@@ -9,8 +9,23 @@ use Touhidurabir\Presenter\Exceptions\PresenterException;
 
 trait HasPresenter {
 
+    /**
+     * The presenter class instance
+     *
+     * @var object
+     */
     protected $presentable;
 
+
+    /**
+     * Set the presenter of a model on fly later
+     *
+     * @param  string $presenterClass
+     * @return object
+     * 
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterClassNotFound
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotValidInstanceOfBase
+     */
     public function setPresenter(string $presenterClass) {
 
         if ( ! class_exists($presenterClass) ) {
@@ -21,6 +36,15 @@ trait HasPresenter {
         return $this->initPresentable($presenterClass);
     }
 
+
+    /**
+     * Allow the access of presenter class
+     *
+     * @return object
+     * 
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotDefined
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotValidInstanceOfBase
+     */
     public function present() {
 
         if ( $this->presentable ) {
@@ -45,6 +69,15 @@ trait HasPresenter {
     }
 
 
+    /**
+     * Initialize the presenter class instance and set the associated model property
+     *
+     * @param  mixed<string|null> $presenterClass
+     * @return object
+     * 
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotDefined
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotValidInstanceOfBase
+     */
     protected function initPresentable(string $presenterClass = null) {
 
         $this->presentable = $presenterClass 

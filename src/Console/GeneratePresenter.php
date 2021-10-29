@@ -25,7 +25,7 @@ class GeneratePresenter extends Command {
      * @var string
      */
     protected $signature = 'make:presenter
-                            {class              : Repository class name}
+                            {class              : Presenter class name}
                             {--replace          : Should replace an existing one}';
 
 

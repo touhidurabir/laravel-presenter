@@ -60,13 +60,25 @@ class User extends Model {
 }
 ```
 
+Now to define a method in our presenter class, follow as : 
+
+```php
+class UserPresenter extends BasePresenter {
+
+    public function someMethod() {
+
+        return $this->model->some_presentable_data;
+    }
+}
+```
+
 And Now any **public** method defined in the **UserPresenter** class can be accesses as : 
 
 ```php
 $user->present()->someMethod
 ```
 
->It is also possible to not define the **$presenter** property while using the presenter class for models . In that case it will try to resolve the presenter through the model name and defaule store namespace defined in the **config** file . 
+>It is also possible to not define the **$presenter** property while using the presenter class for models . In that case it will try to resolve the presenter through the model name and default store namespace defined in the **config** file . 
 >
 >For example, by default it will try to find a class in the **App\Presenters** location with name of **UserPresenter** for **User** model if the **$presenter** property not set in the **User model**. If it can find it, then it will use that for **User** model presenter . If none found, it will throw exception.
 

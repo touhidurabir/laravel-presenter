@@ -86,6 +86,19 @@ class HasPresenterTest extends TestCase {
     /**
      * @test
      */
+    public function will_throw_exception_if_invoked_presentable_method_not_defined_in_presenter_class() {
+
+        $profile = new Profile;
+
+        $this->expectException(Exception::class);
+
+        $profile->present()->nonExistedPresentableMethod();
+    }
+
+
+    /**
+     * @test
+     */
     public function can_set_presenter_on_fly_on_model_instance() {
 
         $profile = new Profile;

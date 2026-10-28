@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Touhidurabir\Presenter\Exceptions\PresenterException;
 use Touhidurabir\StubGenerator\Concerns\NamespaceResolver;
 
-class PresenterResolver {
-
+class PresenterResolver
+{
     use NamespaceResolver;
 
     /**
@@ -16,16 +16,17 @@ class PresenterResolver {
      *
      * @param  object<\Illuminate\Database\Eloquent\Model> $model
      * @return object
-     * 
+     *
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterClassNotFound
      */
-    public static function resolve(Model $model) {
+    public static function resolve(Model $model)
+    {
 
         $presenterStorePath = config('presenter.presenter_namespace');
 
-        $presenterClass = $presenterStorePath . '\\' . (new static)->resolveClassName(get_class($model)) . config('presenter.class_name_prefix');
+        $presenterClass = $presenterStorePath . '\\' . (new static())->resolveClassName(get_class($model)) . config('presenter.class_name_prefix');
 
-        if ( ! class_exists($presenterClass) ) {
+        if (! class_exists($presenterClass)) {
 
             throw PresenterException::presenterClassNotFound($model, $presenterClass);
         }
@@ -34,5 +35,5 @@ class PresenterResolver {
 
         return $presenter;
     }
-    
+
 }

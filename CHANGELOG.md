@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Fixed PHP 8.4 implicit nullable parameter deprecations in `HasPresenter::initPresentable` and `CommandExceptionHandler::outputConsoleException`.
 - Fixed `HasPresenter::setPresenter` referencing an undefined `$model` variable; it now throws the intended `PresenterException` for a missing presenter class.
 - Fixed `BasePresenter::__get` calling `PresenterException::PresentableMethodNotDefine()` without its required arguments; it now throws the intended `PresenterException`.
+- Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
 
 
 ## [1.0.0] - 2021-10-19

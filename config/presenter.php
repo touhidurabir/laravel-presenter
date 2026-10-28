@@ -2,7 +2,7 @@
 
 return [
 
-	/*
+    /*
     |---------------------------------------------------------------------------
     | The base presenter namespace
     |---------------------------------------------------------------------------
@@ -10,7 +10,7 @@ return [
     | where the presenter class should be stored
     |
     */
-	'presenter_namespace' => 'App\\Presenters',
+    'presenter_namespace' => 'App\\Presenters',
 
 
     /*
@@ -22,7 +22,7 @@ return [
     | and based on config provided presenter_namespace location.
     |
     */
-	'auto_resolve' => true,
+    'auto_resolve' => true,
 
 
     /*

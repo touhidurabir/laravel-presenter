@@ -5,8 +5,8 @@ namespace Touhidurabir\Presenter;
 use Illuminate\Database\Eloquent\Model;
 use Touhidurabir\Presenter\Exceptions\PresenterException;
 
-abstract class BasePresenter {
-
+abstract class BasePresenter
+{
     /**
      * The associated model for this presenter
      *
@@ -21,7 +21,8 @@ abstract class BasePresenter {
      * @param  object<\Illuminate\Database\Eloquent\Model> $model
      * @return self
      */
-    public function setModel(Model $model) {
+    public function setModel(Model $model)
+    {
 
         $this->model = $model;
 
@@ -34,7 +35,8 @@ abstract class BasePresenter {
      *
      * @return object<\Illuminate\Database\Eloquent\Model>
      */
-    public function getModel() {
+    public function getModel()
+    {
 
         return $this->model;
     }
@@ -46,9 +48,10 @@ abstract class BasePresenter {
      * @param  string $property
      * @return mixed
      */
-    public function __get(string $property) {
+    public function __get(string $property)
+    {
 
-        if ( ! $this->__isset($property) ) {
+        if (! $this->__isset($property)) {
 
             throw PresenterException::PresentableMethodNotDefine($property, static::class);
         }
@@ -63,9 +66,10 @@ abstract class BasePresenter {
      * @param  string $property
      * @return bool
      */
-    public function __isset(string $property) {
+    public function __isset(string $property)
+    {
 
         return method_exists($this, $property);
     }
-    
+
 }

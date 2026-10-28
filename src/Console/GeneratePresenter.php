@@ -9,10 +9,10 @@ use Touhidurabir\StubGenerator\StubGenerator;
 use Touhidurabir\StubGenerator\Concerns\NamespaceResolver;
 use Touhidurabir\Presenter\Console\Concerns\CommandExceptionHandler;
 
-class GeneratePresenter extends Command {
-
+class GeneratePresenter extends Command
+{
     use NamespaceResolver;
-    
+
     /**
      * Process the handeled exception and provide output
      */
@@ -66,8 +66,9 @@ class GeneratePresenter extends Command {
      *
      * @return void
      */
-    public function __construct() {
-        
+    public function __construct()
+    {
+
         parent::__construct();
     }
 
@@ -77,8 +78,9 @@ class GeneratePresenter extends Command {
      *
      * @return mixed
      */
-    public function handle() {
-        
+    public function handle()
+    {
+
         $this->info('Creating presenter class');
 
         try {
@@ -89,7 +91,7 @@ class GeneratePresenter extends Command {
                 ) ?? config('presenter.presenter_namespace')
             );
 
-            $saveStatus = (new StubGenerator)
+            $saveStatus = (new StubGenerator())
                             ->from($this->generateFullPathOfStubFile($this->stubPath), true)
                             ->to($this->classStorePath, true)
                             ->as($this->resolveClassName($this->argument('class')))
@@ -100,13 +102,13 @@ class GeneratePresenter extends Command {
                             ->replace($this->option('replace'))
                             ->save();
 
-            if ( $saveStatus ) {
+            if ($saveStatus) {
 
                 $this->info('Presenter class generated successfully');
             }
-            
+
         } catch (Throwable $exception) {
-            
+
             $this->outputConsoleException($exception);
 
             return 1;
@@ -120,9 +122,10 @@ class GeneratePresenter extends Command {
      * @param  string $stubRelativePath
      * @return string
      */
-    protected function generateFullPathOfStubFile(string $stubRelativePath) {
+    protected function generateFullPathOfStubFile(string $stubRelativePath)
+    {
 
         return __DIR__ . $stubRelativePath;
     }
-    
+
 }

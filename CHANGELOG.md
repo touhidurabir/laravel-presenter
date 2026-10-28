@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Fixed `HasPresenter::setPresenter` referencing an undefined `$model` variable; it now throws the intended `PresenterException` for a missing presenter class.
 - Fixed `BasePresenter::__get` calling `PresenterException::PresentableMethodNotDefine()` without its required arguments; it now throws the intended `PresenterException`.
 - Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
+- Replaced Travis CI with GitHub Actions (PHP 8.2–8.4 × Laravel 11/12/13, plus a code style check).
 
 
 ## [1.0.0] - 2021-10-19

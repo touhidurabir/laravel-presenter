@@ -27,11 +27,13 @@ return [
 
     /*
     |---------------------------------------------------------------------------
-    | Presenter class name prefix
+    | Presenter class name suffix
     |---------------------------------------------------------------------------
-    | The default prefix that will be attached to a presenter class name every
-    | time on generation.
+    | The suffix attached to the model class name to auto resolve its presenter
+    | class, e.g. User => UserPresenter. It replaces the old, misnamed
+    | 'class_name_prefix' key, which is still honoured if your published config
+    | has it and this key is left at its default.
     |
     */
-    'class_name_prefix' => 'Presenter',
+    'class_name_suffix' => 'Presenter',
 ];

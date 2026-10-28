@@ -7,6 +7,7 @@ use Exception;
 use Orchestra\Testbench\TestCase;
 use Illuminate\Support\Facades\Config;
 use Touhidurabir\Presenter\BasePresenter;
+use Touhidurabir\Presenter\PresenterResolver;
 use Touhidurabir\Presenter\Tests\App\User;
 use Touhidurabir\Presenter\Tests\App\Profile;
 use Touhidurabir\Presenter\Exceptions\PresenterException;
@@ -139,6 +140,50 @@ class HasPresenterTest extends TestCase
         $this->assertInstanceof(ProfilePresenter::class, $profile->present());
 
         $this->assertIsString($profile->present()->fullname);
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function it_auto_resolves_using_the_class_name_suffix_config()
+    {
+
+        Config::set('presenter.presenter_namespace', 'Touhidurabir\\Presenter\\Tests\\App\\Presenters');
+        Config::set('presenter.class_name_suffix', 'Presenter');
+        Config::set('presenter.class_name_prefix', null);
+
+        $this->assertInstanceof(ProfilePresenter::class, (new Profile())->present());
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function the_class_name_suffix_falls_back_to_the_legacy_class_name_prefix_config()
+    {
+
+        // A config published before 'class_name_suffix' existed only has the
+        // old, misnamed 'class_name_prefix' key; the suffix key then comes
+        // from the package default.
+        Config::set('presenter.class_name_suffix', 'Presenter');
+        Config::set('presenter.class_name_prefix', 'View');
+        $this->assertSame('View', PresenterResolver::classNameSuffix());
+
+        Config::set('presenter.class_name_suffix', null);
+        $this->assertSame('View', PresenterResolver::classNameSuffix());
+
+        // A changed 'class_name_suffix' wins over the legacy key.
+        Config::set('presenter.class_name_suffix', 'Model');
+        $this->assertSame('Model', PresenterResolver::classNameSuffix());
+
+        Config::set('presenter.class_name_prefix', null);
+        $this->assertSame('Model', PresenterResolver::classNameSuffix());
+
+        Config::set('presenter.class_name_suffix', null);
+        $this->assertSame('Presenter', PresenterResolver::classNameSuffix());
     }
 
 }

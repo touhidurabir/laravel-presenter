@@ -5,7 +5,11 @@ namespace Touhidurabir\Presenter\Tests;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 use Orchestra\Testbench\TestCase;
+use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Facades\File;
+use Touhidurabir\Presenter\Console\GeneratePresenter;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Touhidurabir\Presenter\Tests\Traits\FileHelpers;
 use Touhidurabir\Presenter\Tests\Traits\LaravelTestBootstrapping;
 
@@ -138,6 +142,28 @@ class CommandTest extends TestCase
             File::get($this->presenterStoreFullPath . 'TestPresenter.php'),
             File::get(__DIR__ . '/App/Presenters/TestPresenter.php'),
         );
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function presenter_command_handle_returns_an_explicit_exit_code()
+    {
+
+        $command = $this->app->make(GeneratePresenter::class);
+        $command->setLaravel($this->app);
+
+        $input = new ArrayInput(['class' => 'ExitCodePresenter'], $command->getDefinition());
+
+        $command->setInput($input);
+        $command->setOutput(new OutputStyle($input, new BufferedOutput()));
+
+        $this->assertSame(GeneratePresenter::SUCCESS, $command->handle());
+
+        // The class now exists and --replace is not given, so generation fails.
+        $this->assertSame(GeneratePresenter::FAILURE, $command->handle());
     }
 
 }

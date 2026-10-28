@@ -2,6 +2,7 @@
 
 namespace Touhidurabir\Presenter\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Exception;
 use RuntimeException;
 use Orchestra\Testbench\TestCase;
@@ -72,6 +73,7 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function presenter_command_will_run() {
         
         $command = $this->artisan('make:presenter UserPresenter');
@@ -87,6 +89,7 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function command_will_fail_if_presenter_class_not_give() {
 
         $this->expectException(RuntimeException::class);
@@ -98,6 +101,7 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function it_will_failed_if_class_already_exists_and_not_instruct_to_replace() {
 
         $this->artisan('make:presenter', ['class' => 'ProfilePresenter'])->assertExitCode(0);;
@@ -109,6 +113,7 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function it_will_generate_proper_presenter_class_at_given_path() {
 
         $this->artisan('make:presenter', ['class' => 'ProfilePresenter'])->assertExitCode(0);
@@ -120,6 +125,7 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function it_will_generate_presenter_class_with_proper_content() {
 
         $this->artisan('make:presenter TestPresenter --replace')->assertExitCode(0);

@@ -50,7 +50,7 @@ abstract class BasePresenter {
 
         if ( ! $this->__isset($property) ) {
 
-            throw PresenterException::PresentableMethodNotDefine();
+            throw PresenterException::PresentableMethodNotDefine($property, static::class);
         }
 
         return $this->{$property}();

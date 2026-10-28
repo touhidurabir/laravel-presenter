@@ -30,7 +30,7 @@ trait HasPresenter {
 
         if ( ! class_exists($presenterClass) ) {
 
-            throw PresenterException::presenterClassNotFound($model, $presenterClass);
+            throw PresenterException::presenterClassNotFound($this, $presenterClass);
         }
 
         return $this->initPresentable($presenterClass);
@@ -78,7 +78,7 @@ trait HasPresenter {
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotDefined
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotValidInstanceOfBase
      */
-    protected function initPresentable(string $presenterClass = null) {
+    protected function initPresentable(?string $presenterClass = null) {
 
         $this->presentable = $presenterClass 
                                 ? Container::getInstance()->make($presenterClass)

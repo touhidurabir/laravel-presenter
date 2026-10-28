@@ -129,6 +129,22 @@ class HasPresenterTest extends TestCase
      * @test
      */
     #[Test]
+    public function will_throw_presenter_exception_if_called_presentable_method_not_defined_in_presenter_class()
+    {
+
+        $user = new User();
+
+        $this->expectException(PresenterException::class);
+        $this->expectExceptionMessage('The presentable method [nonExistedPresentableMethod] not defined');
+
+        $user->present()->nonExistedPresentableMethod();
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
     public function can_set_presenter_on_fly_on_model_instance()
     {
 

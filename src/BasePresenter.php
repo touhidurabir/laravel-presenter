@@ -72,4 +72,20 @@ abstract class BasePresenter
         return method_exists($this, $property);
     }
 
+
+    /**
+     * PHP magic method __call to report an undefined presentable method
+     *
+     * @param  string $method
+     * @param  array  $arguments
+     * @return mixed
+     *
+     * @throws \Touhidurabir\Presenter\Exceptions\PresenterException
+     */
+    public function __call(string $method, array $arguments)
+    {
+
+        throw PresenterException::PresentableMethodNotDefine($method, static::class);
+    }
+
 }

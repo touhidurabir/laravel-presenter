@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Touhidurabir\Presenter\HasPresenter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Profile extends Model {
-
+class Profile extends Model
+{
     use SoftDeletes;
 
     use HasPresenter;

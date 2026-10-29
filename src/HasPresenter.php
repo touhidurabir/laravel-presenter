@@ -3,12 +3,10 @@
 namespace Touhidurabir\Presenter;
 
 use Illuminate\Container\Container;
-use Touhidurabir\Presenter\BasePresenter;
-use Touhidurabir\Presenter\PresenterResolver;
 use Touhidurabir\Presenter\Exceptions\PresenterException;
 
-trait HasPresenter {
-
+trait HasPresenter
+{
     /**
      * The presenter class instance
      *
@@ -22,15 +20,16 @@ trait HasPresenter {
      *
      * @param  string $presenterClass
      * @return object
-     * 
+     *
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterClassNotFound
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotValidInstanceOfBase
      */
-    public function setPresenter(string $presenterClass) {
+    public function setPresenter(string $presenterClass)
+    {
 
-        if ( ! class_exists($presenterClass) ) {
+        if (! class_exists($presenterClass)) {
 
-            throw PresenterException::presenterClassNotFound($model, $presenterClass);
+            throw PresenterException::presenterClassNotFound($this, $presenterClass);
         }
 
         return $this->initPresentable($presenterClass);
@@ -41,28 +40,29 @@ trait HasPresenter {
      * Allow the access of presenter class
      *
      * @return object
-     * 
+     *
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotDefined
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotValidInstanceOfBase
      */
-    public function present() {
+    public function present()
+    {
 
-        if ( $this->presentable ) {
+        if ($this->presentable) {
 
             return $this->presentable;
         }
 
-        if ( ! $this->presenter && config('presenter.auto_resolve') ) {
+        if (! $this->presenter && config('presenter.auto_resolve')) {
 
             return $this->initPresentable();
         }
 
-        if ( ! $this->presenter ) {
+        if (! $this->presenter) {
 
             throw PresenterException::presenterNotDefined($this);
         }
 
-        if ( ! $this->presentable ) {
+        if (! $this->presentable) {
 
             return $this->initPresentable($this->presenter);
         }
@@ -74,17 +74,18 @@ trait HasPresenter {
      *
      * @param  mixed<string|null> $presenterClass
      * @return object
-     * 
+     *
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotDefined
      * @throws \Touhidurabir\Presenter\Exceptions\PresenterException::presenterNotValidInstanceOfBase
      */
-    protected function initPresentable(string $presenterClass = null) {
+    protected function initPresentable(?string $presenterClass = null)
+    {
 
-        $this->presentable = $presenterClass 
+        $this->presentable = $presenterClass
                                 ? Container::getInstance()->make($presenterClass)
                                 : PresenterResolver::resolve($this);
 
-        if ( ! $this->presentable instanceof BasePresenter ) {
+        if (! $this->presentable instanceof BasePresenter) {
 
             throw PresenterException::presenterNotValidInstanceOfBase($this, get_class($this->presentable));
         }

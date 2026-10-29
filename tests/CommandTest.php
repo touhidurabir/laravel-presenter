@@ -2,19 +2,19 @@
 
 namespace Touhidurabir\Presenter\Tests;
 
-use Exception;
+use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 use Orchestra\Testbench\TestCase;
+use Illuminate\Console\OutputStyle;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Artisan;
-use Touhidurabir\Presenter\Tests\App\User;
-use Touhidurabir\Presenter\Tests\App\Profile;
-use Symfony\Component\Console\Tester\CommandTester;
+use Touhidurabir\Presenter\Console\GeneratePresenter;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Touhidurabir\Presenter\Tests\Traits\FileHelpers;
 use Touhidurabir\Presenter\Tests\Traits\LaravelTestBootstrapping;
 
-class CommandTest extends TestCase {
-
+class CommandTest extends TestCase
+{
     use LaravelTestBootstrapping;
 
     use FileHelpers;
@@ -32,12 +32,13 @@ class CommandTest extends TestCase {
      *
      * @return void
      */
-    protected function generatePresenterClassStoreFullPath() {
+    protected function generatePresenterClassStoreFullPath()
+    {
 
         $this->presenterStoreFullPath = $this->sanitizePath(
             str_replace(
-                '/public', 
-                $this->sanitizePath($this->generateFilePathFromNamespace(config('presenter.presenter_namespace'))), 
+                '/public',
+                $this->sanitizePath($this->generateFilePathFromNamespace(config('presenter.presenter_namespace'))),
                 public_path()
             )
         );
@@ -49,7 +50,8 @@ class CommandTest extends TestCase {
      *
      * @return void
      */
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
 
         parent::setUp();
 
@@ -59,7 +61,7 @@ class CommandTest extends TestCase {
 
         $this->beforeApplicationDestroyed(function () use ($self) {
 
-            if ( File::isDirectory($self->presenterStoreFullPath) ) {
+            if (File::isDirectory($self->presenterStoreFullPath)) {
 
                 array_map('unlink', glob($self->presenterStoreFullPath . '*.*'));
 
@@ -72,8 +74,10 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
-    public function presenter_command_will_run() {
-        
+    #[Test]
+    public function presenter_command_will_run()
+    {
+
         $command = $this->artisan('make:presenter UserPresenter');
 
         $command->assertExitCode(0);
@@ -87,7 +91,9 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
-    public function command_will_fail_if_presenter_class_not_give() {
+    #[Test]
+    public function command_will_fail_if_presenter_class_not_give()
+    {
 
         $this->expectException(RuntimeException::class);
 
@@ -98,18 +104,24 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
-    public function it_will_failed_if_class_already_exists_and_not_instruct_to_replace() {
+    #[Test]
+    public function it_will_failed_if_class_already_exists_and_not_instruct_to_replace()
+    {
 
-        $this->artisan('make:presenter', ['class' => 'ProfilePresenter'])->assertExitCode(0);;
+        $this->artisan('make:presenter', ['class' => 'ProfilePresenter'])->assertExitCode(0);
+        ;
 
-        $this->artisan('make:presenter', ['class' => 'ProfilePresenter'])->assertExitCode(1);;
+        $this->artisan('make:presenter', ['class' => 'ProfilePresenter'])->assertExitCode(1);
+        ;
     }
 
 
     /**
      * @test
      */
-    public function it_will_generate_proper_presenter_class_at_given_path() {
+    #[Test]
+    public function it_will_generate_proper_presenter_class_at_given_path()
+    {
 
         $this->artisan('make:presenter', ['class' => 'ProfilePresenter'])->assertExitCode(0);
 
@@ -120,7 +132,9 @@ class CommandTest extends TestCase {
     /**
      * @test
      */
-    public function it_will_generate_presenter_class_with_proper_content() {
+    #[Test]
+    public function it_will_generate_presenter_class_with_proper_content()
+    {
 
         $this->artisan('make:presenter TestPresenter --replace')->assertExitCode(0);
 
@@ -128,6 +142,28 @@ class CommandTest extends TestCase {
             File::get($this->presenterStoreFullPath . 'TestPresenter.php'),
             File::get(__DIR__ . '/App/Presenters/TestPresenter.php'),
         );
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function presenter_command_handle_returns_an_explicit_exit_code()
+    {
+
+        $command = $this->app->make(GeneratePresenter::class);
+        $command->setLaravel($this->app);
+
+        $input = new ArrayInput(['class' => 'ExitCodePresenter'], $command->getDefinition());
+
+        $command->setInput($input);
+        $command->setOutput(new OutputStyle($input, new BufferedOutput()));
+
+        $this->assertSame(GeneratePresenter::SUCCESS, $command->handle());
+
+        // The class now exists and --replace is not given, so generation fails.
+        $this->assertSame(GeneratePresenter::FAILURE, $command->handle());
     }
 
 }

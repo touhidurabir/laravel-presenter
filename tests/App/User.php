@@ -7,8 +7,8 @@ use Touhidurabir\Presenter\HasPresenter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Touhidurabir\Presenter\Tests\App\Presenters\UserPresenter;
 
-class User extends Model {
-
+class User extends Model
+{
     use SoftDeletes;
 
     use HasPresenter;

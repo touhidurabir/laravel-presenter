@@ -6,16 +6,17 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Touhidurabir\Presenter\BasePresenter;
 
-class PresenterException extends Exception {
-    
+class PresenterException extends Exception
+{
     /**
      * Generate exception object if presenter class not defined
      *
      * @param  object<\Illuminate\Database\Eloquent\Model> $model
      * @return object<\Excaption>
      */
-    public static function presenterNotDefined(Model $model) {
-        
+    public static function presenterNotDefined(Model $model)
+    {
+
         return new static(
             sprintf("Presenter not defined for model class [%s]", get_class($model))
         );
@@ -27,14 +28,15 @@ class PresenterException extends Exception {
      *
      * @param  object<\Illuminate\Database\Eloquent\Model>  $model
      * @param  string                                       $presenterClass
-     * 
+     *
      * @return object<\Excaption>
      */
-    public static function presenterNotValidInstanceOfBase(Model $model, string $presenterClass) {
+    public static function presenterNotValidInstanceOfBase(Model $model, string $presenterClass)
+    {
 
         return new static(
             sprintf(
-                "The presenter [%s] class not valid instance of [%s] for model [%s]", 
+                "The presenter [%s] class not valid instance of [%s] for model [%s]",
                 $presenterClass,
                 BasePresenter::class,
                 get_class($model)
@@ -48,15 +50,16 @@ class PresenterException extends Exception {
      *
      * @param  object<\Illuminate\Database\Eloquent\Model>  $model
      * @param  string                                       $presenterClass
-     * 
+     *
      * @return object<\Excaption>
      */
-    public static function presenterClassNotFound(Model $model, string $presenterClass) {
-        
+    public static function presenterClassNotFound(Model $model, string $presenterClass)
+    {
+
         return new static(
             sprintf(
-                "The presenter class [%s] not found for model [%s]", 
-                $presenterClass, 
+                "The presenter class [%s] not found for model [%s]",
+                $presenterClass,
                 get_class($model)
             )
         );
@@ -68,18 +71,19 @@ class PresenterException extends Exception {
      *
      * @param  string $method
      * @param  string $presenterClass
-     * 
+     *
      * @return object<\Excaption>
      */
-    public static function PresentableMethodNotDefine(string $method, string $presenterClass) {
+    public static function PresentableMethodNotDefine(string $method, string $presenterClass)
+    {
 
         return new static(
             sprintf(
-                "The presentable method [%s] not defined in the presenter class [%s]", 
+                "The presentable method [%s] not defined in the presenter class [%s]",
                 $method,
-                $presenterClass, 
+                $presenterClass,
             )
         );
     }
-    
+
 }
